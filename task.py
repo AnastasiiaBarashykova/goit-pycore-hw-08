@@ -189,6 +189,13 @@ def birthdays(args, book: AddressBook):
         return "No upcoming birthdays this week."
     return '\n'.join(f"{r.name.value} - {r.birthday.value.strftime('%d.%m.%Y')}" for r in upcoming)
 
+@input_error
+def show_all_contacts(book: AddressBook):
+    if not book.data:
+        return "Address book is empty"
+
+    return "\n".join(str(record) for record in book.data.values())
+
 
 # Парсер вводу
 def parse_input(user_input):
@@ -221,10 +228,7 @@ def main():
             print(show_phone(args, book))
 
         elif command == "all":
-            if not book.data:
-                print("Address book is empty")
-            for record in book.data.values():
-                print(record)
+            print(show_all_contacts(book))
 
         elif command == "add-birthday":
             print(add_birthday(args, book))
